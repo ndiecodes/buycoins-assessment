@@ -1,6 +1,10 @@
 const { ApolloServer, gql } = require("apollo-server");
 
-const {AllowedTypes, GET_BTC_USD_PRICE, getPurchaseRate} = require("./services/priceService")
+const {
+  AllowedTypes,
+  GET_BTC_USD_PRICE,
+  getPurchaseRate,
+} = require("./services/priceService");
 
 const typeDefs = gql`
   enum AllowedTypes {
@@ -29,8 +33,14 @@ const resolvers = {
   },
 };
 
-const server = new ApolloServer({ typeDefs, resolvers });
-const PORT = process.env.PORT || 4000
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  introspection: true,
+  playground: true,
+});
+
+const PORT = process.env.PORT || 4000;
 
 server.listen(PORT).then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);
